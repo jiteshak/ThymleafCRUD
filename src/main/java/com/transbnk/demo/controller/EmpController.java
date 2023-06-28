@@ -33,9 +33,14 @@ public class EmpController {
 
 	@PostMapping("/register")
 	public String empRegister(@ModelAttribute Employee e, HttpSession session) {
-		service.addEmp(e);
-		session.setAttribute("msg", "Emplyoee Added Sucessfully..");
+		try {
+			service.addEmp(e);
+			session.setAttribute("msg", "Employee Added Successfully");
+		} catch (Exception ex) {
+			session.setAttribute("msg", "Failed to add employee: " + ex.getMessage());
+		}
 		return "redirect:/";
+//		return "add_emp";
 	}
 
 	@GetMapping("/edit/{id}")
@@ -50,6 +55,7 @@ public class EmpController {
 		service.addEmp(e);
 		session.setAttribute("msg", "Emp Data Update Sucessfully..");
 		return "redirect:/";
+//		return "add_emp";
 	}
 
 	@GetMapping("/delete/{id}")
@@ -58,6 +64,7 @@ public class EmpController {
 		service.deleteEMp(id);
 		session.setAttribute("msg", "Emp Data Delete Sucessfully..");
 		return "redirect:/";
+//		return "add_emp";
 	}
 
 	@GetMapping("/page/{pageno}")
